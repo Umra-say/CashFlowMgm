@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Financial Goals</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Goal Tracker Container */
+.goal-form {
+    background: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.goal-form label {
+    display: block;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #6A5ACD; /* Amethyst */
+    margin-top: 10px;
+}
+
+.goal-form select,
+.goal-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+/* Goal List Styles */
+#goalList {
+    list-style-type: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.goal-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.goal-item strong {
+    font-size: 1.2em;
+    color: #6A5ACD; /* Amethyst */
+}
+
+.goal-item progress {
+    width: 100%;
+    height: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Update Progress Input */
+.goal-item input {
+    width: 60%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.goal-item button {
+    background-color: #6A5ACD; /* Amethyst */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.goal-item button:hover {
+    background-color: #87CEEB; /* Sky Blue */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Set Your Financial Goals</h2>
+
+        <!-- Goal Input Form -->
+        <div class="goal-form">
+            <label for="goalType">Goal Type:</label>
+            <select id="goalType">
+                <option value="savings">Savings</option>
+                <option value="revenue">Revenue</option>
+                <option value="profit">Profit</option>
+            </select>
+
+            <label for="targetAmount">Target Amount (₹):</label>
+            <input type="number" id="targetAmount" placeholder="Enter amount">
+
+            <label for="deadline">Deadline:</label>
+            <input type="date" id="deadline">
+
+            <button onclick="addGoal()">Add Goal</button>
+        </div>
+
+        <!-- Goals List -->
+        <h3>Your Goals</h3>
+        <ul id="goalList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadGoals);
+
+        function addGoal() {
+            let goalType = document.getElementById("goalType").value;
+            let targetAmount = document.getElementById("targetAmount").value;
+            let deadline = document.getElementById("deadline").value;
+
+            if (!targetAmount || !deadline) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            let goal = {
+                id: Date.now(), // Unique ID for each goal
+                goalType,
+                targetAmount: parseFloat(targetAmount), // Convert to number
+                deadline,
+                currentProgress: 0
+            };
+
+            let goals = JSON.parse(localStorage.getItem("goals")) || [];
+            goals.push(goal);
+            localStorage.setItem("goals", JSON.stringify(goals));
+
+            loadGoals();
+        }
+
+        function loadGoals() {
+            let goalList = document.getElementById("goalList");
+            goalList.innerHTML = "";
+            let goals = JSON.parse(localStorage.getItem("goals")) || [];
+
+            goals.forEach(goal => {
+                let li = document.createElement("li");
+                li.classList.add("goal-item");
+                li.innerHTML = `
+                    <div>
+                        <strong>${goal.goalType.toUpperCase()}</strong>: ₹${goal.targetAmount} (Deadline: ${goal.deadline})<br>
+                        
+                        <label>Progress:</label>
+                        <progress value="${goal.currentProgress}" max="${goal.targetAmount}"></progress>
+                        <span> ₹${goal.currentProgress} / ₹${goal.targetAmount} </span>
+                        
+                        <input type="number" id="progressInput-${goal.id}" placeholder="Update Progress">
+                        <button onclick="updateProgress(${goal.id})">Update</button>
+                    </div>
+                    <button onclick="deleteGoal(${goal.id})">Delete</button>
+                `;
+                goalList.appendChild(li);
+            });
+        }
+
+        function updateProgress(id) {
+            let goals = JSON.parse(localStorage.getItem("goals")) || [];
+            let progressInput = document.getElementById(`progressInput-${id}`).value;
+
+            if (!progressInput || isNaN(progressInput) || progressInput < 0) {
+                alert("Enter a valid progress amount!");
+                return;
+            }
+
+            goals = goals.map(goal => {
+                if (goal.id === id) {
+                    goal.currentProgress = Math.min(goal.targetAmount, parseFloat(progressInput));
+                }
+                return goal;
+            });
+
+            localStorage.setItem("goals", JSON.stringify(goals));
+            loadGoals();
+        }
+
+        function deleteGoal(id) {
+            let goals = JSON.parse(localStorage.getItem("goals")) || [];
+            goals = goals.filter(goal => goal.id !== id);
+            localStorage.setItem("goals", JSON.stringify(goals));
+            loadGoals();
+        }
+    </script>
+</body>
+</html>

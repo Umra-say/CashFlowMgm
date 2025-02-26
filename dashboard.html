@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cash Flow Management Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Navigation Buttons */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            background: linear-gradient(to right, #6A5ACD, #87CEEB);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: transform 0.3s ease-in-out, background 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #87CEEB, #6A5ACD);
+        }
+
+        /* Card Enhancements */
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cash Flow Management</h1>
+            <p>Your personal financial assistant for better money management.</p>
+        </header>
+        
+        <!-- Navigation Links to Features -->
+        <nav>
+            <ul>
+                <li><a href="expenses.html">Track Income & Expenses</a></li>
+                <li><a href="history.html">Transaction History</a></li>
+                <li><a href="setGoal.html">Set Financial Goals</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Summary Cards -->
+        <div class="summary">
+            <div class="card">
+                <h2>Total Income</h2>
+                <p>Rs. <span id="total-income">0</span></p>
+            </div>
+            <div class="card">
+                <h2>Total Expenses</h2>
+                <p>Rs. <span id="total-expense">0</span></p>
+            </div>
+            <div class="card">
+                <h2>Net Balance</h2>
+                <p>Rs. <span id="net-balance">0</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Cash Flow Management. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const totalIncomeEl = document.getElementById("total-income");
+            const totalExpenseEl = document.getElementById("total-expense");
+            const netBalanceEl = document.getElementById("net-balance");
+
+            // Fetch transactions from localStorage (to be replaced with backend call later)
+            const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+            // Calculate totals
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            transactions.forEach(transaction => {
+                if (transaction.type === "income") {
+                    totalIncome += transaction.amount;
+                } else if (transaction.type === "expense") {
+                    totalExpense += transaction.amount;
+                }
+            });
+
+            // Calculate Net Balance
+            let netBalance = totalIncome - totalExpense;
+
+            // Update UI
+            totalIncomeEl.textContent = `${totalIncome}`;
+            totalExpenseEl.textContent = `${totalExpense}`;
+            netBalanceEl.textContent = `${netBalance}`;
+        });
+    </script>
+</body>
+</html>

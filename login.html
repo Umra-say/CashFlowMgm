@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cash Flow Management App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Improved Login Form Styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.login-form {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.login-form h2 {
+    font-size: 2em;
+    color: #6A5ACD; /* Amethyst */
+    margin-bottom: 15px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-group input:focus {
+    border-color: #6A5ACD; /* Amethyst */
+    outline: none;
+    box-shadow: 0 0 8px rgba(106, 90, 205, 0.3);
+}
+
+/* Fancy Button Animation */
+.login-btn {
+    width: 100%;
+    background: linear-gradient(45deg, #6A5ACD, #87CEEB);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(45deg, #87CEEB, #6A5ACD);
+    transform: scale(1.05);
+}
+
+/* Interactive Sign-up Link */
+.login-form p {
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+.login-form a {
+    color: #6A5ACD;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-form a:hover {
+    color: #87CEEB;
+}
+
+/* Add Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-form {
+        width: 90%;
+    }
+
+    .login-btn {
+        font-size: 1em;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Cash Flow Management App</h1>
+        </div>
+    </header>
+
+    <main class="login-container">
+        <form id="loginForm" class="login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Cash Flow Management App. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store the token in localStorage (for future authenticated requests)
+                    localStorage.setItem('auth_token', data.token);
+                    alert('Login successful!');
+                    window.location.href = 'dashboard.html';  // Redirect to the main page
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Login failed');
+            }
+        });
+    </script>
+</body>
+</html>

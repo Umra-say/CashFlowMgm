@@ -1,0 +1,240 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    line-height: 1.8;
+    background-color: #F5F5F5; /* Light Gray */
+    color: #333; /* Dark Gray text */
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(to right, #6A5ACD, #87CEEB); /* Amethyst and Sky Blue gradient */
+    color: white;
+    text-align: center;
+    padding: 60px 30px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 3.5em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+header p {
+    font-size: 1.4em;
+    margin-top: 15px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Section Styles */
+section {
+    padding: 40px 50px;
+    margin: 30px auto;
+    max-width: 1000px;
+    background-color: #FFFFFF; /* White background */
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    border-left: 8px solid #6A5ACD; /* Amethyst border */
+}
+
+section h2 {
+    font-size: 2.8em;
+    font-family: 'Roboto', sans-serif;
+    color: #6A5ACD; /* Amethyst */
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+section p {
+    font-size: 1.2em;
+    color: #555; /* Light Gray text */
+    margin-bottom: 20px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* Features List */
+section ul {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+section ul li {
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    color: #555; /* Dark Gray text */
+}
+
+section ul li strong {
+    color: #87CEEB; /* Sky Blue for emphasis */
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+section ul li::before {
+    content: "•";
+    color: #6A5ACD; /* Amethyst bullet */
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #6A5ACD; /* Amethyst footer */
+    color: white;
+    text-align: center;
+    padding: 25px 40px;
+    margin-top: 50px;
+    border-radius: 20px;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Interactive Elements */
+button {
+    background-color: #87CEEB; /* Sky Blue */
+    color: #333333; /* Dark Gray text */
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #6A5ACD; /* Amethyst on hover */
+}
+
+/* Footer Links */
+footer a {
+    color: #F5F5F5; /* Light Gray footer links */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #87CEEB; /* Sky Blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    section {
+        padding: 25px 30px;
+        margin: 20px;
+    }
+
+    section h2 {
+        font-size: 2.2em;
+    }
+
+    section ul {
+        grid-template-columns: 1fr;
+    }
+
+    section p {
+        font-size: 1.1em;
+    }
+
+    footer {
+        font-size: 1.1em;
+    }
+}
+
+/* Navigation Links for Login/Signup */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nav-links a {
+    margin: 0 20px;
+    padding: 10px 20px;
+    background-color: #87CEEB; /* Sky Blue */
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #6A5ACD; /* Amethyst on hover */
+}
+
+/* Custom Styles for Income and Expense Forms */
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="date"],
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* List Styles for Income and Expense */
+.income-list ul,
+.expense-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.income-list li,
+.expense-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.income-list li button,
+.expense-list li button {
+    background-color: #6A5ACD; /* Amethyst button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.income-list li button:hover,
+.expense-list li button:hover {
+    background-color: #87CEEB; /* Sky Blue on hover */
+}
